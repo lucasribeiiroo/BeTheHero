@@ -49,3 +49,30 @@ form input {
 .button:hover {
   filter: brightness(90%);
 }
+
+.dark-mode {
+  background-color: #111111;
+}
+
+.nav-bar{
+  display: block;
+  height: 45px;
+}
+
+.nav-content {
+  float: right;
+  margin-top: 3px;
+  color: grey;
+}
+
+.nav-content .MuiFormControlLabel-label{
+  font-weight: bold;
+}
+
+.white-mode .MuiFormControlLabel-label{
+  color: grey;
+}
+
+.dark-mode h1, .MuiFormControlLabel-label{
+  color: #fffafa;
+}
