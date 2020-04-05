@@ -11,6 +11,7 @@ body{
   font: 400 14px Roboto, sans-serif;
   background: #f0f0f5;
   -webkit-font-smoothing: antialiase;
+  overflow-y: hidden;
 }
 
 input, button, textarea {
@@ -50,6 +51,27 @@ form input {
   filter: brightness(90%);
 }
 
+.back-link{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #41414d;
+  margin-top: 40px;
+  font-size: 18px;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.back-link:hover { 
+  opacity: 0.8;
+}
+
+.back-link svg{
+  margin-right: 10px;
+}
+
+/* --------Theme---------- */
+
 .dark-mode {
   background-color: #111111;
 }
@@ -62,7 +84,6 @@ form input {
 .nav-content {
   float: right;
   margin-top: 3px;
-  color: grey;
 }
 
 .nav-content .MuiFormControlLabel-label{
@@ -76,3 +97,11 @@ form input {
 .dark-mode h1, .MuiFormControlLabel-label{
   color: #fffafa;
 }
+
+.dark-mode .register-container .content {
+  background-color: #222222;
+  box-shadow: 0 0 100px rgba(256, 256, 256, 0.1);
+}
+
+
+/*  ------------------ */
