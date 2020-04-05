@@ -10,8 +10,8 @@
 body{
   font: 400 14px Roboto, sans-serif;
   background: #f0f0f5;
+  height: 100vh;
   -webkit-font-smoothing: antialiase;
-  overflow-y: hidden;
 }
 
 input, button, textarea {
@@ -103,5 +103,28 @@ form input {
   box-shadow: 0 0 100px rgba(256, 256, 256, 0.1);
 }
 
+.dark-mode .profile-container header button {
+  border-color: #333333;
+}
+
+.dark-mode .profile-container span {
+  color: white;
+}
+
+.dark-mode .profile-container header button:hover {
+  border-color: #444444;
+}
+
+.dark-mode .profile-container ul li {
+  background-color: #222222;
+}
+
+.dark-mode .profile-container ul li strong {
+  color: white;
+}
+
+.dark-mode .profile-container ul li button {
+  background-color: transparent;
+}
 
 /*  ------------------ */
