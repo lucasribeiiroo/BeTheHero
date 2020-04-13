@@ -3,7 +3,7 @@
   max-width: 1180px;
   padding: 0 20px;
   margin: 32px auto;
-  height: calc(100vh + 35px);
+  height: 100%;
   margin-bottom: 0;
 }
 
@@ -58,6 +58,7 @@
   padding: 24px;
   border-radius: 8px;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .profile-container ul li button {

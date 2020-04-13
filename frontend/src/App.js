@@ -21,7 +21,6 @@ class App extends Component {
 
   render(){
     const { darkMode, modeLabel } = this.state;
-    console.log(darkMode);
     
     const appTheme = darkMode ? 'dark-mode': 'white-mode';
     return (
