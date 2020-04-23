@@ -5,6 +5,9 @@ import './styles.css';
 import logo from '../../assets/logo.svg'
 import './styles.css';
 import api from '../services/api'
+import toastr from 'reactjs-toastr';
+import 'reactjs-toastr/lib/toast.css';
+
 
 export default function IncidentRegister(){
   const [title, setTitle] = useState('');
@@ -31,7 +34,7 @@ export default function IncidentRegister(){
       });
       history.push('/profile');
     } catch (error){
-      alert('Erro ao cadastrar novo incidente, verifique as informações')
+      toastr.error('Erro ao cadastrar novo incidente, verifique as informações')
     }
   }
 

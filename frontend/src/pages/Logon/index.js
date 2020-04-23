@@ -5,6 +5,9 @@ import './styles.css';
 import heroesImg from '../../assets/heroes.png';
 import logo from '../../assets/logo.svg';
 import api from '../services/api'
+import toastr from 'reactjs-toastr';
+import 'reactjs-toastr/lib/toast.css';
+
 
 function Logon(){
   const [id, setId] = useState('');
@@ -19,7 +22,7 @@ function Logon(){
       localStorage.setItem('ongName', response.data.name);
       history.push('/profile');
     } catch(err) {
-      alert('Falha no login, tente novamente');
+      toastr.error('Falha no login, tente novamente');
     }
   }
 

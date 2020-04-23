@@ -4,6 +4,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { FiPower, FiTrash2 } from 'react-icons/fi'
 import './styles.css';
 import api from '../services/api'
+import toastr from 'reactjs-toastr';
+import 'reactjs-toastr/lib/toast.css';
 
 export default function Profile(){
   const [incidents, setIncidents] = useState([]);
@@ -34,7 +36,7 @@ export default function Profile(){
       })
       
     } catch (error){
-      alert('Erro ao deletar caso, tente novamente');
+      toastr.error('Erro ao deletar caso, tente novamente');
     }
   }
 

@@ -4,6 +4,8 @@ import { Link, useHistory } from 'react-router-dom';
 import logo from '../../assets/logo.svg'
 import api from '../services/api'
 import './styles.css';
+import toastr from 'reactjs-toastr';
+import 'reactjs-toastr/lib/toast.css';
 
 
 export default function Register(){
@@ -26,10 +28,10 @@ export default function Register(){
     }
     try{
       const response = await api.post('ongs', data);
-      alert(`Seu ID de acesso é: ${response.data.id}`);
+      toastr.sucess(`Seu ID de acesso é: ${response.data.id}`);
       history.push('/'); 
     } catch(error){
-      alert('Erro ao realizar cadastro, verifique suas informações!')
+      toastr.info('Erro ao realizar cadastro, verifique suas informações!')
     }
   }
   return (
