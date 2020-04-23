@@ -1,20 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../../assets/logo.svg';
+import loader from '../../assets/loader.json';
 import { Link, useHistory } from 'react-router-dom';
 import { FiPower, FiTrash2 } from 'react-icons/fi'
 import './styles.css';
 import api from '../services/api'
 import toastr from 'reactjs-toastr';
 import 'reactjs-toastr/lib/toast.css';
+import { motion } from "framer-motion";
+import Lottie from 'react-lottie';
 
 export default function Profile(){
   const [incidents, setIncidents] = useState([]);
   const ongId = localStorage.getItem('ongId');
   const ongName = localStorage.getItem('ongName');
   const history = useHistory();
+  const [showLoader, setShowLoader] = useState(true);
+
+  const containerMotion = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delay: 2,
+        when: "beforeChildren",
+        staggerChildren: 0.3
+      }
+    }
+  };
+
+  const itemMotion = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1
+    }
+  };
+
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true, 
+    animationData: loader,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
 
   useEffect(() => {
     loadIncidents();
+    setTimeout(() => { 
+      setShowLoader(false)
+  }, 1500);
   }, [ongId])
 
   function loadIncidents() {
@@ -34,7 +72,7 @@ export default function Profile(){
           Authorization: ongId
         }
       })
-      
+      loadIncidents();
     } catch (error){
       toastr.error('Erro ao deletar caso, tente novamente');
     }
@@ -47,7 +85,26 @@ export default function Profile(){
   
   return (
     <div className="profile-container">
-      <header>
+      <Lottie 
+        style={{
+          position: 'absolute',
+          top:'45%',
+          left: '45%',
+          zIndex: 100,
+          visibility: showLoader ?  'none' : 'hidden'
+        }} 
+        options={defaultOptions}
+        height={100}
+        width={100}
+      />
+      <motion.div 
+        className="container"
+        style={{visibility: showLoader ?  'hidden' : ''}}
+          variants={containerMotion}
+          initial="hidden"
+          animate="visible"  
+      >
+      <motion.header className="item" variants={itemMotion}>
         <img src={logo} alt="logo-bth"/>
         <span>Bem vinda, {ongName}</span>
 
@@ -55,12 +112,17 @@ export default function Profile(){
         <button type="button" onClick={() => handleLogout()}>
           <FiPower size={18} color="#E02041" />
         </button>
-      </header>
+      </motion.header>
 
       <h1>Casos cadastrados</h1>
-      <ul>
+      <motion.ul
+        className="container"
+        variants={containerMotion}
+        initial="hidden"
+        animate="visible"
+      >
         {incidents.map(incident => (
-          <li key={incident.id}>
+          <motion.li className="item" variants={itemMotion} key={incident.id}>
             <strong>CASO:</strong>
             <p>{incident.title}</p>
             <strong>DESCRIÇÃO:</strong>
@@ -70,9 +132,10 @@ export default function Profile(){
             <button type="button" onClick={() => handleDeleteIncident(incident.id)}>
               <FiTrash2 size={20} color="#a8a8b3" />
             </button>
-          </li>
+          </motion.li>
         ))}
-      </ul>
+      </motion.ul>
+      </motion.div>
     </div>
   )
 }
