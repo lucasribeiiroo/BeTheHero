@@ -87,3 +87,28 @@
   line-height: 21px;
   font-size: 16px;
 }
+
+.dialog-btn {
+  height: 40px;
+  font-size: 14px;
+  width: 60px;
+  border-radius: 8px;
+  color: white;
+}
+.no{
+  background: #E02041;
+  transition: filter 0.2s;
+}
+
+.no:hover {
+  filter: brightness(90%);
+}
+
+.yes { 
+  background: #008000;
+  transition: filter 0.2s;
+}
+
+.yes:hover {
+  filter: brightness(90%);
+}
