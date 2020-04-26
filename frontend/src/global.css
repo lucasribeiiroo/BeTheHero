@@ -80,6 +80,12 @@ form textarea {
   margin-right: 10px;
 }
 
+.error-message {
+  color: #E02041;
+  font-weight: bold;
+  margin: 10px 0 5px 5px;
+}
+
 /* --------Theme---------- */
 
 .dark-mode {

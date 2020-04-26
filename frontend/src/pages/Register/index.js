@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi'
 import { Link, useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form'
 import logo from '../../assets/logo.svg'
 import api from '../services/api'
 import './styles.css';
@@ -9,9 +10,9 @@ import 'reactjs-toastr/lib/toast.css';
 import { containerMotion } from '../../animations/FrameMotion'
 import { motion } from "framer-motion";
 
-
 export default function Register(){
 
+  const { register, handleSubmit, errors } = useForm()
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -54,36 +55,62 @@ export default function Register(){
           </Link>
         </section>
 
-        <form onSubmit={handleRegister}>
-          <input 
+        <form onSubmit={handleSubmit(handleRegister)}>
+          <input
+            name='ong'
+            ref={register({ required: true })} 
             placeholder="Nome da ONG" 
             value={name}
             onChange={e => setName(e.target.value)}
           />
+
+          {errors?.ong?.type === "required" && <div className="error-message">Campo obrigatório!</div>}
+
           <input 
+            name='email'
+            ref={register({ required: true })} 
             type="email"
             placeholder="E-mail"
             value={email}
             onChange={e => setEmail(e.target.value)}    
           />
+
+          {errors?.email?.type === "required" && <div className="error-message">Campo obrigatório!</div>}
+          
           <input 
+            name='whatsapp'
+            ref={register({ required: true, pattern: /\d+/ })} 
             placeholder="WhatsApp"
             value={whatsapp}
             onChange={e => setWhatsapp(e.target.value)}    
           />
 
+          {errors?.whatsapp?.type === "required" && <div className="error-message">Campo obrigatório!</div>}
+          {errors?.whatsapp?.type === "pattern" && <div className="error-message">Campo inválido, digite apenas números!</div>}
+
           <div className="input-group">
-            <input  
-            placeholder="Cidade"
-            value={city}
-            onChange={e => setCity(e.target.value)} 
-            />
             <input
-            placeholder="UF"
-            style={{ width: 80 }}
-            value={uf}
-            onChange={e => setUf(e.target.value)}  
+              name='city'
+              ref={register({ required: true })} 
+              placeholder="Cidade"
+              value={city}
+              onChange={e => setCity(e.target.value)} 
             />
+
+            {errors?.city?.type === "required" && <div className="error-message">Campo obrigatório!</div>}
+            
+            <input
+              name='uf'
+              ref={register({ required: true, maxLength: 2 })} 
+              placeholder="UF"
+              style={{ width: 80 }}
+              value={uf}
+              onChange={e => setUf(e.target.value)}  
+            />
+            
+            {errors?.uf?.type === "required" && <div className="error-message">Campo obrigatório!</div>}
+            {errors?.uf?.type === "maxLength" && <div className="error-message">Campo inválido, digite apenas as siglas do estado!</div>}
+          
           </div>
 
           <button className="button" type="submit">Cadastrar</button>

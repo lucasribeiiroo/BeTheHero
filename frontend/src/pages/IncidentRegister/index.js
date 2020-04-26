@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form'
 import { FiArrowLeft } from 'react-icons/fi'
 import { Link, useHistory } from 'react-router-dom';
 import './styles.css';
@@ -11,6 +12,7 @@ import { containerMotion } from '../../animations/FrameMotion'
 import { motion } from "framer-motion";
 
 export default function IncidentRegister(){
+  const { register, handleSubmit, errors } = useForm()
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
@@ -58,23 +60,33 @@ export default function IncidentRegister(){
           </Link>
         </section>
 
-        <form onSubmit={handleNewIncident}>
-          <input 
+        <form onSubmit={handleSubmit(handleNewIncident)}>
+          <input
+            name='title'
+            ref={register({ required: true, maxLength: 30 })} 
             placeholder="Título"
             value={title}
             onChange={e => setTitle(e.target.value)}
           />
+          {errors?.title?.type === "required"  && <div className="error-message">Campo obrigatório!</div>}
+          {errors?.title?.type === "maxLength" && <div className="error-message">Campo inválido, título deve ter no máximo 30 caracteres!</div>}
           <textarea 
+            name='description'
             placeholder="Descrição"
+            ref={register({ required: true })} 
             value={description}
             onChange={e => setDescription(e.target.value)}
           />
+          {errors.description && <div className="error-message">Campo obrigatório!</div>}
           <input 
+            name='value'
             placeholder="Valor em reais"
+            ref={register({ required: true, pattern: /\d+/ })} 
             value={value}
             onChange={e => setValue(e.target.value)}
           />
-
+          {errors?.value?.type === "required" && <div className="error-message">Campo obrigatório!</div>}
+          {errors?.value?.type === "pattern" && <div className="error-message">Campo inválido, digite apenas números!</div>}
           <button className="button" type="submit">Cadastrar</button>
         </form>
       </div>

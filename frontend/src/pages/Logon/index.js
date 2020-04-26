@@ -1,4 +1,5 @@
 import React, { useState }from 'react';
+import { useForm } from 'react-hook-form'
 import { FiLogIn } from 'react-icons/fi'
 import { Link, useHistory } from 'react-router-dom';
 import './styles.css';
@@ -12,12 +13,12 @@ import { motion } from "framer-motion";
 
 
 function Logon(){
+  const { register, handleSubmit, errors } = useForm()
   const [id, setId] = useState('');
   const history = useHistory();
 
-  async function handleLogin(e){
-    e.preventDefault();
-
+  const handleLogin = async (data) =>{
+    console.log('data', data)
     try {
       const response = await api.post('sessions', { id });
       localStorage.setItem('ongId', id);
@@ -37,13 +38,16 @@ function Logon(){
       >
         <section className="form">
           <img src={logo} alt="logo-bth"/>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSubmit(handleLogin)}>
             <h1>Faça seu logon</h1>
-            <input 
+            <input
+              name='id'
               placeholder="Sua ID"
+              ref={register({ required: true })} 
               value={id}
               onChange={e => setId(e.target.value)}    
             />
+            {errors.id && <div className="error-message">Campo obrigatório!</div>}
             <button className="button" type="submit">Entrar</button>
 
           <Link className='back-link' to="/register">
