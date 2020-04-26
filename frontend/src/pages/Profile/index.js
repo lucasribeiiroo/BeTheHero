@@ -88,7 +88,7 @@ export default function Profile(){
       <h1>Casos cadastrados</h1>
       <motion.ul
         className="container"
-        variants={containerMotion(2)}
+        variants={containerMotion}
         initial="hidden"
         animate="visible"
       >

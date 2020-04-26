@@ -12,7 +12,7 @@ import { containerMotion } from '../../animations/FrameMotion'
 import { motion } from "framer-motion";
 
 export default function IncidentRegister(){
-  const { register, handleSubmit, errors } = useForm()
+  const { register, handleSubmit, errors, setError, clearError } = useForm()
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
@@ -20,8 +20,7 @@ export default function IncidentRegister(){
 
   const history = useHistory();
 
-  async function handleNewIncident(e){
-    e.preventDefault();
+  async function handleNewIncident(){
 
     const data = {
       title,
@@ -38,6 +37,15 @@ export default function IncidentRegister(){
       history.push('/profile');
     } catch (error){
       toastr.error('Erro ao cadastrar novo incidente, verifique as informações')
+    }
+  }
+
+  const checkValue = (e) => {
+    const { value } = e.target;
+    if(isNaN(value)){
+      setError("value", "invalidValue", "Campo inválido, digite apenas números!")
+    } else { 
+      clearError("value");
     }
   }
 
@@ -84,9 +92,10 @@ export default function IncidentRegister(){
             ref={register({ required: true, pattern: /\d+/ })} 
             value={value}
             onChange={e => setValue(e.target.value)}
+            onBlur={e => checkValue(e)}
           />
           {errors?.value?.type === "required" && <div className="error-message">Campo obrigatório!</div>}
-          {errors?.value?.type === "pattern" && <div className="error-message">Campo inválido, digite apenas números!</div>}
+          {errors?.value?.type === "invalidValue" && <div className="error-message">{errors.value.message}</div>}
           <button className="button" type="submit">Cadastrar</button>
         </form>
       </div>
