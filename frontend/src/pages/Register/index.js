@@ -6,6 +6,8 @@ import api from '../services/api'
 import './styles.css';
 import toastr from 'reactjs-toastr';
 import 'reactjs-toastr/lib/toast.css';
+import { containerMotion } from '../../animations/FrameMotion'
+import { motion } from "framer-motion";
 
 
 export default function Register(){
@@ -35,7 +37,11 @@ export default function Register(){
     }
   }
   return (
-    <div className="register-container">
+    <motion.div className="register-container container"
+      variants={containerMotion(0.5)}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="content">
         <section>
         <img src={logo} alt="logo-bth"/>
@@ -83,6 +89,6 @@ export default function Register(){
           <button className="button" type="submit">Cadastrar</button>
         </form>
       </div>
-    </div>
+    </motion.div>
   )
 }

@@ -8,6 +8,8 @@ import api from '../services/api'
 import toastr from 'reactjs-toastr';
 import 'reactjs-toastr/lib/toast.css';
 import { motion } from "framer-motion";
+import { containerMotion, itemMotion } from '../../animations/FrameMotion'
+import { defaultOptions } from '../../animations/Lottie'
 import Lottie from 'react-lottie';
 
 export default function Profile(){
@@ -16,37 +18,6 @@ export default function Profile(){
   const ongName = localStorage.getItem('ongName');
   const history = useHistory();
   const [showLoader, setShowLoader] = useState(true);
-
-  const containerMotion = {
-    hidden: { opacity: 1, scale: 0 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        delay: 2,
-        when: "beforeChildren",
-        staggerChildren: 0.3
-      }
-    }
-  };
-
-  const itemMotion = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1
-    }
-  };
-
-
-  const defaultOptions = {
-    loop: true,
-    autoplay: true, 
-    animationData: loader,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'
-    }
-  };
 
   useEffect(() => {
     loadIncidents();
@@ -93,7 +64,7 @@ export default function Profile(){
           zIndex: 100,
           visibility: showLoader ?  'none' : 'hidden'
         }} 
-        options={defaultOptions}
+        options={defaultOptions(loader)}
         height={100}
         width={100}
       />
@@ -117,7 +88,7 @@ export default function Profile(){
       <h1>Casos cadastrados</h1>
       <motion.ul
         className="container"
-        variants={containerMotion}
+        variants={containerMotion(2)}
         initial="hidden"
         animate="visible"
       >

@@ -7,6 +7,8 @@ import logo from '../../assets/logo.svg';
 import api from '../services/api'
 import toastr from 'reactjs-toastr';
 import 'reactjs-toastr/lib/toast.css';
+import { containerMotion } from '../../animations/FrameMotion'
+import { motion } from "framer-motion";
 
 
 function Logon(){
@@ -27,7 +29,12 @@ function Logon(){
   }
 
     return (
-      <div className="logon-container">
+      <motion.div  
+        className="logon-container container"
+        variants={containerMotion(0.5)}
+        initial="hidden"
+        animate="visible" 
+      >
         <section className="form">
           <img src={logo} alt="logo-bth"/>
           <form onSubmit={handleLogin}>
@@ -47,7 +54,7 @@ function Logon(){
         </section>
 
         <img src={heroesImg} alt="heroes"/>
-      </div>
+      </motion.div>
     )
 }
 
