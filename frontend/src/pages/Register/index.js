@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 
 export default function Register(){
 
-  const { register, handleSubmit, errors } = useForm()
+  const { register, handleSubmit, errors, setError, clearError } = useForm()
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -20,8 +20,7 @@ export default function Register(){
   const [uf, setUf] = useState('');
   const history = useHistory();
 
-  async function handleRegister(e){
-    e.preventDefault();
+  async function handleRegister(){
     const data = {
       name,
       email,
@@ -37,8 +36,30 @@ export default function Register(){
       toastr.info('Erro ao realizar cadastro, verifique suas informações!')
     }
   }
+
+  const checkPhone = (e) => {
+    const { value } = e.target;
+    const phoneRegex = new RegExp(/\d{11}/);
+    if(!phoneRegex.test(value)){
+      setError("whatsapp", "invalidPhone", "Campo inválido, digite apenas números!")
+    } else { 
+      clearError("whatsapp");
+    }
+  }
+
+  const checkUf = (e) => {
+    const { value } = e.target;
+    const ufRegex = new RegExp(/[A-Za-z]/);
+    if(!ufRegex.test(value) || value.length > 2){
+      setError("uf", "invalidUf", "Campo inválido, digite apenas as siglas sem números!")
+    } else { 
+      clearError("uf");
+    }
+  }
+
   return (
-    <motion.div className="register-container container"
+    <motion.div 
+      className="register-container container"
       variants={containerMotion(0.5)}
       initial="hidden"
       animate="visible"
@@ -79,16 +100,16 @@ export default function Register(){
           
           <input 
             name='whatsapp'
-            ref={register({ required: true, pattern: /\d+/ })} 
-            placeholder="WhatsApp"
+            ref={register({ required: true })}
+            placeholder="DDD + WhatsApp"
             value={whatsapp}
-            onChange={e => setWhatsapp(e.target.value)}    
+            onChange={e => setWhatsapp(e.target.value)}
+            onBlur={e => checkPhone(e)}    
           />
 
+          {errors?.whatsapp?.type === "invalidPhone" && <div className="error-message">{errors.whatsapp.message}</div>}
           {errors?.whatsapp?.type === "required" && <div className="error-message">Campo obrigatório!</div>}
-          {errors?.whatsapp?.type === "pattern" && <div className="error-message">Campo inválido, digite apenas números!</div>}
 
-          <div className="input-group">
             <input
               name='city'
               ref={register({ required: true })} 
@@ -103,15 +124,13 @@ export default function Register(){
               name='uf'
               ref={register({ required: true, maxLength: 2 })} 
               placeholder="UF"
-              style={{ width: 80 }}
               value={uf}
-              onChange={e => setUf(e.target.value)}  
+              onChange={e => setUf(e.target.value)}
+              onBlur={e => checkUf(e)}
             />
-            
+
             {errors?.uf?.type === "required" && <div className="error-message">Campo obrigatório!</div>}
-            {errors?.uf?.type === "maxLength" && <div className="error-message">Campo inválido, digite apenas as siglas do estado!</div>}
-          
-          </div>
+            {errors?.uf?.type === "invalidUf" && <div className="error-message">{errors.uf.message}</div>}
 
           <button className="button" type="submit">Cadastrar</button>
         </form>
