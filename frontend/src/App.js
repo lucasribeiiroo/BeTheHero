@@ -17,6 +17,8 @@ class App extends Component {
       darkMode: !prevState.darkMode,
       modeLabel: newLabel,
     }));
+
+    document.body.style.backgroundColor = darkMode ?  '#f0f0f5' : '#111111';
   }
 
   render(){
