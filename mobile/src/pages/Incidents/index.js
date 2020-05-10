@@ -33,7 +33,7 @@ export default function Incidents() {
 
     setIncidents([...incidents, ...response.data]);
     console.log('response.headers', response.headers)
-    setTotal(response.headers['X-Total-Count']);
+    setTotal(response.headers['x-total-count']);
     setPage(page + 1);
     setLoading(false)
   }
